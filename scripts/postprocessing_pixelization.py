@@ -150,7 +150,14 @@ def process(img):
 
     img = img.crop((left, top, right, bottom))
 
-    trans = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+    # Ensure the image is in RGB format
+    if img.mode != 'RGB':
+        img = img.convert('RGB')
+
+    trans = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+    ])
 
     return trans(img)[None, :, :, :]
 
